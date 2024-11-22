@@ -8,8 +8,7 @@ export default function SearchBox({ updateInfo }) {
   let [error, setError] = useState(false);
   let API_URL = "https://api.openweathermap.org/data/2.5/weather";
   let API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-  let UNSPLASH_ACCESS_KEY = import.meta.env.UNSPLASH_ACCESS_KEY;
-
+  let accessToken = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
   let getWeatherInfo = async () => {
     try {
       let response = await fetch(
@@ -18,7 +17,7 @@ export default function SearchBox({ updateInfo }) {
       let jsonResponse = await response.json();
 
       let imgResponse = await fetch(
-        `https://api.unsplash.com/search/photos?query=${jsonResponse.weather[0].description}+City&client_id=${UNSPLASH_ACCESS_KEY}`
+        `https://api.unsplash.com/search/photos?query=${city}&client_id=${accessToken}`
       );
       let jsonimgResponse = await imgResponse.json();
       let result = {
@@ -63,7 +62,7 @@ export default function SearchBox({ updateInfo }) {
           value={city}
           onChange={handleChange}
         />
-        <br />
+        <br /><br />
         <Button variant="contained" type="submit">
           Search
         </Button>
